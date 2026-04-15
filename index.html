@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio · Amady Dia</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- DARK MODE TOGGLE -->
+  <div class="theme-toggle">
+    <input type="checkbox" id="darkmode-toggle" class="checkbox">
+    <label for="darkmode-toggle" class="label">
+      <i class="fas fa-moon"></i>
+      <i class="fas fa-sun"></i>
+      <div class="ball"></div>
+    </label>
+  </div>
+
+  <!-- MOBILE NAVIGATION -->
+  <header>
+    <nav class="navbar">
+      <div class="nav-brand">Amady Dia.</div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="#home" class="nav-link">Accueil</a></li>
+        <li class="nav-item"><a href="#about" class="nav-link">À propos</a></li>
+        <li class="nav-item"><a href="#skills" class="nav-link">Compétences</a></li>
+        <li class="nav-item"><a href="#projects" class="nav-link">Projets</a></li>
+        <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME / HERO SECTION -->
+    <section id="home" class="hero">
+      <div class="hero-content glass">
+        <h1>Amady Dia</h1>
+        <div class="typed-container">
+          <span id="typed-text"></span><span class="cursor">|</span>
+        </div>
+        <p>Développeur full-stack & créateur d'expériences digitales</p>
+        <a href="#projects" class="btn neon-btn">Voir mes projets <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="hero-overlay"></div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="about reveal">
+      <div class="section-title">
+        <h2>À propos de moi</h2>
+        <div class="underline"></div>
+      </div>
+      <div class="about-container">
+        <div class="about-img glass">
+          <img src="moi.jpg.jpeg" alt="Photo profil">
+          <!-- image placeholder élégante -->
+        </div>
+        <div class="about-text glass">
+          <p>Étudiant en deuxième année d’Informatique Appliquée à la Gestion, passionné par le développement web et le design, je transforme progressivement mes idées en sites et applications modernes et performants.
+Curieux et motivé, je m’intéresse particulièrement à l’univers JavaScript et à l’écosystème Python, que j’explore à travers des projets académiques et personnels.
+Rigoureux, créatif et toujours à l’affût des nouvelles technologies, je souhaite mettre mes compétences au service de la création de sites web et d’applications innovantes.</p>
+          <p><i class="fas fa-map-pin"></i>  Mbour · Disponible pour missions</p>
+          <div class="about-social">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </section> 
+
+    <!-- SKILLS SECTION avec barres de progression animées -->
+    <section id="skills" class="skills reveal">
+      <div class="section-title">
+        <h2>Compétences techniques</h2>
+        <div class="underline"></div>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card glass">
+          <div class="skill-header">
+            <span>HTML / CSS</span>
+            <span class="skill-percent" data-level="80">80%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="80"></div>
+          </div>
+        </div>
+        <div class="skill-card glass">
+          <div class="skill-header">
+            <span>JavaScript</span>
+            <span class="skill-percent" data-level="50">50%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="50"></div>
+          </div>
+        </div>
+        <div class="skill-card glass">
+          <div class="skill-header">
+            <span>PHP</span>
+            <span class="skill-percent" data-level="60">60%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="60"></div>
+          </div>
+        </div>
+        <div class="skill-card glass">
+          <div class="skill-header">
+            <span>Python</span>
+            <span class="skill-percent" data-level="50">50%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="50"></div>
+          </div>
+        </div>
+        <div class="skill-card glass">
+          <div class="skill-header">
+            <span>React</span>
+            <span class="skill-percent" data-level="40">40%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="40"></div>
+          </div>
+        </div>
+        <div class="skill-card glass">
+          <div class="skill-header">
+            <span>Java</span>
+            <span class="skill-percent" data-level="55">55%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="55"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION avec cartes interactives -->
+    <section id="projects" class="projects reveal">
+      <div class="section-title">
+        <h2>Projets récents</h2>
+        <div class="underline"></div>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card glass">
+          <div class="project-img">
+            <i class="fas fa-cart-shopping"></i>
+          </div>
+          <h3>Boutique en ligne</h3>
+          <p>Site e-commerce moderne permettant de consulter des produits et gérer un panier.</p>
+          <div class="project-tags">
+            <span>React</span><span>Node</span><span>MongoDB</span>
+          </div>
+          <a href="#" class="project-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="project-card glass">
+          <div class="project-img">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Système d’authentification</h3>
+          <p>Système de gestion des utilisateurs et des rôles.</p>
+          <div class="project-tags">
+            <span>Php</span><span>MySQL</span>
+          </div>
+          <a href="#" class="project-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="project-card glass">
+          <div class="project-img">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3>Gestionnaire de tâches</h3>
+          <p>Application de gestion de tâches permettant d’ajouter, modifier et supprimer des tâches.</p>
+          <div class="project-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+          <a href="#" class="project-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION avec formulaire fonctionnel (JS) -->
+    <section id="contact" class="contact reveal">
+      <div class="section-title">
+        <h2>Contactez-moi</h2>
+        <div class="underline"></div>
+      </div>
+      <div class="contact-container glass">
+        <div class="contact-info">
+          <h3><i class="fas fa-paper-plane"></i> Discutons de votre projet</h3>
+          <p>Une idée ? Une collaboration ? Écrivez-moi !</p>
+          <div class="contact-details">
+            <p><i class="fas fa-envelope"></i> dia9amadu@gmail.com</p>
+            <p><i class="fas fa-phone-alt"></i> +221 77 420 72 34</p>
+            <p><i class="fas fa-map-marker-alt"></i> Mbour, Sénégal</p>
+          </div>
+        </div>
+        <form id="contactForm" class="contact-form">
+          <div class="input-group">
+            <input type="text" id="name" placeholder=" " required>
+            <label for="name">Nom complet</label>
+          </div>
+          <div class="input-group">
+            <input type="email" id="email" placeholder=" " required>
+            <label for="email">Adresse email</label>
+          </div>
+          <div class="input-group">
+            <textarea id="message" rows="4" placeholder=" " required></textarea>
+            <label for="message">Message</label>
+          </div>
+          <button type="submit" class="btn neon-btn" id="submitBtn">Envoyer <i class="fas fa-paper-plane"></i></button>
+          <p id="formFeedback" class="form-feedback"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER avec réseaux sociaux -->
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2026 Amady Dia — Portfolio professionnel</p>
+      <div class="footer-social">
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
