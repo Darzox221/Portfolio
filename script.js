@@ -63,18 +63,44 @@ darkModeToggle.addEventListener('change', () => {
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
+function toggleMenu() {
   hamburger.classList.toggle('active');
   navMenu.classList.toggle('active');
-});
+  
+  // Empêcher le scroll quand menu ouvert
+  if (navMenu.classList.contains('active')) {
+    body.classList.add('menu-open');
+  } else {
+    body.classList.remove('menu-open');
+  }
+}
 
+hamburger.addEventListener('click', toggleMenu);
+
+// Fermer le menu quand on clique sur un lien
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
+    if (navMenu.classList.contains('active')) {
+      toggleMenu();
+    }
   });
 });
 
+// Fermer le menu si on clique à l'extérieur
+document.addEventListener('click', (e) => {
+  if (navMenu.classList.contains('active')) {
+    if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+      toggleMenu();
+    }
+  }
+});
+
+// Réinitialiser sur resize
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
+    toggleMenu();
+  }
+});
 // ========== SCROLL REVEAL ANIMATION ==========
 const revealElements = document.querySelectorAll('.reveal');
 
