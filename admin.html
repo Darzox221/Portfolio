@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Messages Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+        }
+
+        h1 i {
+            color: #4a6cf7;
+            margin-right: 10px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .refresh-btn {
+            background: #4a6cf7;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+
+        .refresh-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .messages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        .message-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .message-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .message-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .message-info .email {
+            color: #4a6cf7;
+            font-size: 13px;
+        }
+
+        .message-date {
+            color: #999;
+            font-size: 12px;
+            text-align: right;
+        }
+
+        .message-content {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .reply-btn {
+            background: #4a6cf7;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .reply-btn:hover {
+            background: #3a5bd0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .messages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <i class="fas fa-envelope"></i>
+                Messages reçus
+            </h1>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">Total messages</div>
+                </div>
+                <button class="refresh-btn" onclick="loadMessages()">
+                    <i class="fas fa-sync-alt"></i> Rafraîchir
+                </button>
+            </div>
+        </div>
+
+        <div id="messagesContainer" class="messages-grid">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Chargement des messages...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadMessages() {
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Chargement...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/messages');
+                const messages = await response.json();
+                
+                const totalCount = document.getElementById('totalCount');
+                totalCount.textContent = messages.length;
+                
+                if (messages.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <h3>Aucun message pour le moment</h3>
+                            <p>Les messages de contact apparaîtront ici</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = messages.reverse().map(msg => `
+                    <div class="message-card" data-id="${msg.id}">
+                        <div class="message-header">
+                            <div class="message-info">
+                                <h3><i class="fas fa-user"></i> ${escapeHtml(msg.name)}</h3>
+                                <div class="email">
+                                    <i class="fas fa-envelope"></i> ${escapeHtml(msg.email)}
+                                </div>
+                            </div>
+                            <div class="message-date">
+                                <i class="fas fa-calendar"></i><br>
+                                ${msg.date}
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            <i class="fas fa-comment"></i> ${escapeHtml(msg.message)}
+                        </div>
+                        <div class="message-actions">
+                            <a href="mailto:${msg.email}" class="reply-btn">
+                                <i class="fas fa-reply"></i> Répondre
+                            </a>
+                            <button onclick="deleteMessage('${msg.id}')" class="delete-btn">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Erreur de connexion</h3>
+                        <p>Vérifie que le serveur Python est démarré (python app.py)</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function deleteMessage(id) {
+            if (confirm('Supprimer ce message ?')) {
+                try {
+                    const response = await fetch(`http://localhost:5000/api/messages/${id}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        loadMessages();
+                    } else {
+                        alert('Erreur lors de la suppression');
+                    }
+                } catch (error) {
+                    alert('Erreur: ' + error.message);
+                }
+            }
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Charger les messages au démarrage
+        loadMessages();
+        
+        // Rafraîchir toutes les 30 secondes
+        setInterval(loadMessages, 30000);
+    </script>
+</body>
+</html>

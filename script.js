@@ -63,44 +63,18 @@ darkModeToggle.addEventListener('change', () => {
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-function toggleMenu() {
+hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('active');
   navMenu.classList.toggle('active');
-  
-  // Empêcher le scroll quand menu ouvert
-  if (navMenu.classList.contains('active')) {
-    body.classList.add('menu-open');
-  } else {
-    body.classList.remove('menu-open');
-  }
-}
+});
 
-hamburger.addEventListener('click', toggleMenu);
-
-// Fermer le menu quand on clique sur un lien
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', () => {
-    if (navMenu.classList.contains('active')) {
-      toggleMenu();
-    }
+    hamburger.classList.remove('active');
+    navMenu.classList.remove('active');
   });
 });
 
-// Fermer le menu si on clique à l'extérieur
-document.addEventListener('click', (e) => {
-  if (navMenu.classList.contains('active')) {
-    if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
-      toggleMenu();
-    }
-  }
-});
-
-// Réinitialiser sur resize
-window.addEventListener('resize', () => {
-  if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
-    toggleMenu();
-  }
-});
 // ========== SCROLL REVEAL ANIMATION ==========
 const revealElements = document.querySelectorAll('.reveal');
 
@@ -147,11 +121,12 @@ function checkSkills() {
 window.addEventListener('scroll', checkSkills);
 window.addEventListener('load', checkSkills);
 
-// ========== FORMULAIRE DE CONTACT (fonctionnel avec JS) ==========
+// ========== FORMULAIRE DE CONTACT AVEC BACKEND PYTHON ==========
 const contactForm = document.getElementById('contactForm');
 const formFeedback = document.getElementById('formFeedback');
+const submitBtn = document.getElementById('submitBtn');
 
-contactForm.addEventListener('submit', (e) => {
+contactForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const name = document.getElementById('name').value.trim();
@@ -170,10 +145,43 @@ contactForm.addEventListener('submit', (e) => {
     return;
   }
 
-  // Simulation d'envoi réussi
-  formFeedback.textContent = '✅ Message envoyé ! Je vous répondrai rapidement.';
-  formFeedback.style.color = '#27ae60';
-  contactForm.reset();
+  // Désactiver le bouton pendant l'envoi
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
+
+  try {
+    const response = await fetch('http://localhost:5000/send-message', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, message })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      formFeedback.textContent = '✅ ' + result.message;
+      formFeedback.style.color = '#27ae60';
+      contactForm.reset();
+    } else {
+      formFeedback.textContent = '❌ ' + result.message;
+      formFeedback.style.color = '#e74c3c';
+    }
+  } catch (error) {
+    console.error('Erreur:', error);
+    formFeedback.textContent = '❌ Erreur de connexion. Vérifie que le serveur Python est démarré (python app.py)';
+    formFeedback.style.color = '#e74c3c';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Envoyer <i class="fas fa-paper-plane"></i>';
+    
+    setTimeout(() => {
+      if (formFeedback.textContent !== '') {
+        formFeedback.textContent = '';
+      }
+    }, 5000);
+  }
 });
 
 function validateEmail(email) {
@@ -221,13 +229,3 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
-
-// ========== RESET SKILL BARS AU CHARGEMENT ==========
-// On remet les barres à 0% au chargement pour qu'elles s'animent au scroll
-window.addEventListener('load', () => {
-  progressBars.forEach(bar => {
-    bar.style.width = '0%';
-  });
-  // On vérifie si la section est déjà visible
-  setTimeout(checkSkills, 100);
-});
