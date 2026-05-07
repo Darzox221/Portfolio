@@ -123,68 +123,87 @@ function checkSkills() {
 window.addEventListener('scroll', checkSkills);
 window.addEventListener('load', checkSkills);
 
-// ========== FORMULAIRE DE CONTACT AVEC BACKEND PYTHON ==========
+// ========== FORMULAIRE DE CONTACT (Formspree — hébergement statique, sans backend) ==========
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xaqavaqe';
+
 const contactForm = document.getElementById('contactForm');
 const formFeedback = document.getElementById('formFeedback');
 const submitBtn = document.getElementById('submitBtn');
 
-contactForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
+if (contactForm && formFeedback && submitBtn) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const message = document.getElementById('message').value.trim();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
 
-  if (name === '' || email === '' || message === '') {
-    formFeedback.textContent = '⚠️ Tous les champs sont obligatoires.';
-    formFeedback.style.color = '#e74c3c';
-    return;
-  }
-
-  if (!validateEmail(email)) {
-    formFeedback.textContent = '⚠️ Adresse email invalide.';
-    formFeedback.style.color = '#e74c3c';
-    return;
-  }
-
-  // Désactiver le bouton pendant l'envoi
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
-
-  try {
-    const response = await fetch('http://localhost:5000/send-message', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, email, message })
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-      formFeedback.textContent = '✅ ' + result.message;
-      formFeedback.style.color = '#27ae60';
-      contactForm.reset();
-    } else {
-      formFeedback.textContent = '❌ ' + result.message;
+    if (name === '' || email === '' || message === '') {
+      formFeedback.textContent = '⚠️ Tous les champs sont obligatoires.';
       formFeedback.style.color = '#e74c3c';
+      return;
     }
-  } catch (error) {
-    console.error('Erreur:', error);
-    formFeedback.textContent = '❌ Erreur de connexion. Vérifie que le serveur Python est démarré (python app.py)';
-    formFeedback.style.color = '#e74c3c';
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = 'Envoyer <i class="fas fa-paper-plane"></i>';
-    
-    setTimeout(() => {
-      if (formFeedback.textContent !== '') {
-        formFeedback.textContent = '';
+
+    if (!validateEmail(email)) {
+      formFeedback.textContent = '⚠️ Adresse email invalide.';
+      formFeedback.style.color = '#e74c3c';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
+
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          _replyto: email,
+        }),
+      });
+
+      let data = {};
+      try {
+        data = await response.json();
+      } catch {
+        /* réponse non JSON */
       }
-    }, 5000);
-  }
-});
+
+      if (response.ok) {
+        formFeedback.textContent =
+          '✅ Message envoyé ! Je te réponds dès que possible.';
+        formFeedback.style.color = '#27ae60';
+        contactForm.reset();
+      } else {
+        const errText =
+          (data && (data.error || (data.errors && String(data.errors)))) ||
+          "L'envoi a échoué. Vérifie ta connexion ou réessaie plus tard.";
+        formFeedback.textContent = '❌ ' + errText;
+        formFeedback.style.color = '#e74c3c';
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+      formFeedback.textContent =
+        '❌ Erreur de connexion. Réessaie dans un instant.';
+      formFeedback.style.color = '#e74c3c';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Envoyer <i class="fas fa-paper-plane"></i>';
+
+      setTimeout(() => {
+        if (formFeedback.textContent !== '') {
+          formFeedback.textContent = '';
+        }
+      }, 5000);
+    }
+  });
+}
 
 function validateEmail(email) {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

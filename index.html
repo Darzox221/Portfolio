@@ -157,7 +157,7 @@
           <div class="project-tags">
             <span>React</span><span>Node</span><span>MongoDB</span>
           </div>
-          <a href="#" class="project-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+          <a href="projet-boutique.html" class="project-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="project-card glass">
           <div class="project-img">
@@ -168,7 +168,7 @@
           <div class="project-tags">
             <span>Php</span><span>MySQL</span>
           </div>
-          <a href="#" class="project-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+          <a href="projet-authentification.html" class="project-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="project-card glass">
           <div class="project-img">
@@ -179,7 +179,7 @@
           <div class="project-tags">
             <span>HTML</span><span>CSS</span><span>JS</span>
           </div>
-          <a href="#" class="project-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+          <a href="projet-taches.html" class="project-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
     </section>
@@ -200,17 +200,17 @@
             <p><i class="fas fa-map-marker-alt"></i> Mbour, Sénégal</p>
           </div>
         </div>
-        <form id="contactForm" class="contact-form">
+        <form id="contactForm" class="contact-form" action="https://formspree.io/f/xaqavaqe" method="POST">
           <div class="input-group">
-            <input type="text" id="name" placeholder=" " required>
+            <input type="text" id="name" name="name" placeholder=" " required>
             <label for="name">Nom complet</label>
           </div>
           <div class="input-group">
-            <input type="email" id="email" placeholder=" " required>
+            <input type="email" id="email" name="email" placeholder=" " required>
             <label for="email">Adresse email</label>
           </div>
           <div class="input-group">
-            <textarea id="message" rows="4" placeholder=" " required></textarea>
+            <textarea id="message" name="message" rows="4" placeholder=" " required></textarea>
             <label for="message">Message</label>
           </div>
           <button type="submit" class="btn neon-btn" id="submitBtn">Envoyer <i class="fas fa-paper-plane"></i></button>

@@ -773,4 +773,131 @@ footer {
   .projects { padding: 4rem 3%; }
   .contact { padding: 4rem 3%; }
 }
+
+/* ========== PROJECT DETAIL PAGES ========== */
+a.nav-brand {
+  text-decoration: none;
+}
+
+.project-page main {
+  padding-top: 5.5rem;
+  min-height: calc(100vh - 120px);
+}
+
+.project-detail-hero {
+  padding: 2.5rem 5% 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.project-detail-icon-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.project-detail-icon-wrap i {
+  margin-bottom: 0;
+}
+
+.project-detail-hero h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.project-detail-hero .project-lead {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 640px;
+  margin: 0 auto 1.25rem;
+  line-height: 1.65;
+}
+
+.project-detail-hero .project-tags {
+  justify-content: center;
+}
+
+.project-detail-body {
+  max-width: 800px;
+  margin: 0 auto 4rem;
+  padding: 2rem 2.25rem;
+}
+
+.project-detail-section {
+  margin-bottom: 1.75rem;
+}
+
+.project-detail-section:last-of-type {
+  margin-bottom: 0;
+}
+
+.project-detail-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.65rem;
+  color: var(--primary);
+}
+
+.dark .project-detail-section h2 {
+  color: var(--secondary);
+}
+
+.project-detail-section p {
+  line-height: 1.7;
+}
+
+.project-detail-section ul {
+  margin: 0.5rem 0 0 1.25rem;
+  line-height: 1.7;
+}
+
+.project-detail-section li {
+  margin-bottom: 0.45rem;
+}
+
+.project-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .project-detail-actions {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.back-to-projects {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+  opacity: 0.85;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.back-to-projects:hover {
+  opacity: 1;
+  color: var(--primary);
+}
+
+.dark .back-to-projects:hover {
+  color: var(--secondary);
+}
+
+@media (max-width: 480px) {
+  .project-detail-hero h1 {
+    font-size: 1.75rem;
+  }
+  .project-detail-body {
+    padding: 1.5rem 1.25rem;
+    margin-left: 3%;
+    margin-right: 3%;
+  }
 }

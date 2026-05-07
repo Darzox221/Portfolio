@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Système d’authentification · Amady Dia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="project-page">
+  <div class="theme-toggle">
+    <input type="checkbox" id="darkmode-toggle" class="checkbox">
+    <label for="darkmode-toggle" class="label">
+      <i class="fas fa-moon"></i>
+      <i class="fas fa-sun"></i>
+      <div class="ball"></div>
+    </label>
+  </div>
+
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="nav-brand">Amady Dia.</a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html#home" class="nav-link">Accueil</a></li>
+        <li class="nav-item"><a href="index.html#about" class="nav-link">À propos</a></li>
+        <li class="nav-item"><a href="index.html#skills" class="nav-link">Compétences</a></li>
+        <li class="nav-item"><a href="index.html#projects" class="nav-link">Projets</a></li>
+        <li class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="project-detail-hero">
+      <a href="index.html#projects" class="back-to-projects"><i class="fas fa-arrow-left"></i> Retour aux projets</a>
+      <div class="project-img project-detail-icon-wrap">
+        <i class="fas fa-chart-line"></i>
+      </div>
+      <h1>Système d’authentification</h1>
+      <p class="project-lead">Module de gestion des comptes utilisateurs, connexion sécurisée et attribution de rôles — typique d’une application PHP reliée à MySQL.</p>
+      <div class="project-tags">
+        <span>PHP</span><span>MySQL</span>
+      </div>
+    </div>
+
+    <article class="project-detail-body glass">
+      <section class="project-detail-section">
+        <h2>Contexte</h2>
+        <p>Objectif : centraliser l’identité des utilisateurs (inscription, connexion, déconnexion) et restreindre certaines pages selon le rôle (admin, utilisateur, etc.).</p>
+      </section>
+      <section class="project-detail-section">
+        <h2>Fonctionnalités</h2>
+        <ul>
+          <li>Inscription avec validation des champs</li>
+          <li>Connexion avec sessions PHP</li>
+          <li>Hachage des mots de passe</li>
+          <li>Table des utilisateurs et des rôles en base</li>
+        </ul>
+      </section>
+      <section class="project-detail-section">
+        <h2>Ce que j’en retiens</h2>
+        <p>Bonnes pratiques de sécurité côté serveur, requêtes préparées pour limiter les injections SQL, et séparation des pages publiques / protégées. Adapte ce paragraphe à ton implémentation réelle.</p>
+      </section>
+      <div class="project-detail-actions">
+        <a href="index.html#contact" class="btn neon-btn">Me contacter <i class="fas fa-paper-plane"></i></a>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2026 Amady Dia — Portfolio professionnel</p>
+      <div class="footer-social">
+        <a href="https://github.com/Darzox221/Portfolio" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/amady-dia-5790523a3/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://x.com/_iamzo__" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/_iamzo__" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="project-page.js"></script>
+</body>
+</html>
