@@ -154,18 +154,19 @@ if (contactForm && formFeedback && submitBtn) {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
 
     try {
+      // FormData (multipart) : souvent plus fiable que le JSON une fois en ligne (Formspree / hébergeurs)
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('message', message);
+      formData.append('_replyto', email);
+
       const response = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
+        body: formData,
         headers: {
-          'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({
-          name,
-          email,
-          message,
-          _replyto: email,
-        }),
       });
 
       let data = {};
@@ -180,17 +181,26 @@ if (contactForm && formFeedback && submitBtn) {
           '✅ Message envoyé ! Je te réponds dès que possible.';
         formFeedback.style.color = '#27ae60';
         contactForm.reset();
+      } else if (response.status === 403) {
+        formFeedback.textContent =
+          '❌ Formspree refuse ce site : sur formspree.io → ton formulaire → Settings, ajoute ton domaine (ex. monsite.com) dans « Restrict to domain », ou désactive cette option.';
+        formFeedback.style.color = '#e74c3c';
       } else {
-        const errText =
-          (data && (data.error || (data.errors && String(data.errors)))) ||
-          "L'envoi a échoué. Vérifie ta connexion ou réessaie plus tard.";
+        let errText =
+          (data && data.error) ||
+          (data.errors &&
+            (typeof data.errors === 'string'
+              ? data.errors
+              : JSON.stringify(data.errors))) ||
+          '';
+        if (!errText) errText = "L'envoi a échoué. Réessaie plus tard.";
         formFeedback.textContent = '❌ ' + errText;
         formFeedback.style.color = '#e74c3c';
       }
     } catch (error) {
       console.error('Erreur:', error);
       formFeedback.textContent =
-        '❌ Erreur de connexion. Réessaie dans un instant.';
+        '❌ Connexion impossible vers Formspree (réseau, bloqueur de pub ou pare-feu). Réessaie ou envoie-moi un email directement.';
       formFeedback.style.color = '#e74c3c';
     } finally {
       submitBtn.disabled = false;

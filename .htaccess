@@ -1,0 +1,8 @@
+# Hostinger / Apache — page d’accueil et types MIME (souvent utiles si le site « marche en local » mais pas en ligne)
+DirectoryIndex index.html index.htm
+
+<IfModule mod_mime.c>
+  AddType text/css .css
+  AddType application/javascript .js
+  AddType image/jpeg .jpeg .jpg
+</IfModule>
